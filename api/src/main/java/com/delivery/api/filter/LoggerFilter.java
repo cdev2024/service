@@ -27,12 +27,19 @@ public class LoggerFilter implements Filter {
         headerNames.asIterator().forEachRemaining(headerkey -> {
             var headerValue = req.getHeader(headerkey);
 
-            headerValues.append(headerkey).append(" : ").append(headerValue).append(", ");
+            headerValues
+                    .append("[")
+                    .append(headerkey)
+                    .append(" : ")
+                    .append(headerValue)
+                    .append("] ");
         });
 
         var requestBody = new String(req.getContentAsByteArray());
+        var uri = req.getRequestURI();
+        var method = req.getMethod();
 
-        log.info(">>>> header : {}, body : {}", headerValues, requestBody);
+        log.info(">>>> uri : {}, method : {}, header : {}, body : {}", uri, method, headerValues, requestBody);
 
         // response 정보
         var responseHeaderValues = new StringBuilder();
@@ -40,12 +47,11 @@ public class LoggerFilter implements Filter {
         res.getHeaderNames().forEach(headerkey -> {
             var haderValue = res.getHeader(headerkey);
 
-        responseHeaderValues.append(headerkey).append(" : ").append(haderValue).append(", ");
+            responseHeaderValues.append(headerkey).append(" : ").append(haderValue).append(", ");
+        });
 
         var reponseBody = new String(res.getContentAsByteArray());
-
-        log.info("<<<<< header : {}, body : {}", responseHeaderValues, reponseBody);
-        });
+        log.info("<<<<< uri : {}, method : {}, header : {}, body : {}", uri, method, responseHeaderValues, reponseBody);
 
         res.copyBodyToResponse(); // responseBody 내용을 앞에서 모두 읽어버려서, 초기화해주지 않으면 빈 responseBody 가 전송됨.
     }
