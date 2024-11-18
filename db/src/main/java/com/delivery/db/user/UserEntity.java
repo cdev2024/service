@@ -1,9 +1,8 @@
 package com.delivery.db.user;
 
 import com.delivery.db.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.delivery.db.user.enums.UserStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +30,8 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @Column(length = 50, nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Column(length = 150, nullable = false)
     private String address;
