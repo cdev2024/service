@@ -1,10 +1,12 @@
 package com.delivery.api.domain.user.service;
 
 import com.delivery.api.common.error.ErrorCode;
+import com.delivery.api.common.error.UserErrorCode;
 import com.delivery.api.common.exception.ApiException;
 import com.delivery.db.user.UserEntity;
 import com.delivery.db.user.UserRepository;
 import com.delivery.db.user.enums.UserStatus;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,21 @@ public class UserService {
                     return userRepository.save(userEntity);
                 })
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "User Entity Null"));
+    }
+
+    public UserEntity getUserWithThrow(
+            String email,
+            String password
+    ){
+        return userRepository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
+                email,
+                password,
+                UserStatus.REGISTERD
+        ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
+    }
+
+    public UserEntity login(@NotBlank String email, @NotBlank String password) {
+        var entity = getUserWithThrow(email, password);
+        return entity;
     }
 }

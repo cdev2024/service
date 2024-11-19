@@ -3,6 +3,7 @@ package com.delivery.api.domain.user.business;
 import com.delivery.api.common.annotaion.Business;
 import com.delivery.api.common.error.ErrorCode;
 import com.delivery.api.common.exception.ApiException;
+import com.delivery.api.domain.user.controller.model.UserLoginRequest;
 import com.delivery.api.domain.user.controller.model.UserRegisterRequest;
 import com.delivery.api.domain.user.controller.model.UserResponse;
 import com.delivery.api.domain.user.converter.UserConverter;
@@ -38,5 +39,17 @@ public class UserBusiness {
                 .map(userService::register)
                 .map(userConverter::toResponse)
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "request is null"));*/
+    }
+
+    /**
+     * 로그인 로직
+     * 1. email, password를 가지고 사용자 체크
+     * 2. user enrity 로그인 확인
+     * 3. token 생성 => 일단은 코드로 확인
+     * 4. token response
+     * */
+    public void login(@Valid UserLoginRequest request) {
+        var userEntity = userService.login(request.getEmail(), request.getPassword());
+
     }
 }
