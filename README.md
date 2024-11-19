@@ -1,4 +1,22 @@
 ## delivery DB의 User 테이블
+```mermaid
+---
+delivery DB : ERD
+---
+erDiagram
+  USER{
+    bigint id PK "NOT NULL AUTO_INCREMENT"
+    varchar(50) name "NOT NULL"
+    varchar(100) email "NOT NULL"
+    varchar(100) password "NOT NULL"
+    varchar(50) status "NOT NULL"
+    varchar(150) address "NOT NULL"
+    datetime registered_at
+    datetime unregistered_at
+    datetime last_login_at
+  }
+```
+
 ```
 CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
