@@ -48,8 +48,11 @@ public class UserBusiness {
      * 3. token 생성 => 일단은 코드로 확인
      * 4. token response
      * */
-    public void login(@Valid UserLoginRequest request) {
+    public UserResponse login(@Valid UserLoginRequest request) {
         var userEntity = userService.login(request.getEmail(), request.getPassword());
 
+        // TODO: 토큰 생성
+
+        return userConverter.toResponse(userEntity);
     }
 }
