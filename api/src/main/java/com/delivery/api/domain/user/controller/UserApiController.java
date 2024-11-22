@@ -25,11 +25,6 @@ public class UserApiController {
     public Api<UserResponse> me(
             @UserSession User user
     ){
-
-//        var requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
-//        var userId = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
-//
-//        var response = userBusiness.me(Long.parseLong(userId.toString()));
         var response = userBusiness.me(user.getId());
         return Api.OK(response);
     }
