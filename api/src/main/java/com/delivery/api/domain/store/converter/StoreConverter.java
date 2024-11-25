@@ -32,7 +32,7 @@ public class StoreConverter {
     }
 
     // entity -> response
-    public StoreResponse storeResponse(StoreEntity entity){
+    public StoreResponse toResponse(StoreEntity entity){
         return Optional.ofNullable(entity)
                 .map(it -> {
                     return StoreResponse.builder()
